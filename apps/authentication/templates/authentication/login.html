@@ -2,7 +2,7 @@
 
 {% block page_title %}{{ page_title }}{% endblock %}
 
-{% block signup_active %}{% if signup_active %}active{% endif %}{% endblock %}
+{% block login_active %}{% if login_active %}active{% endif %}{% endblock %}
 
 {% block body %}
 <div class="modal modal-signin position-static d-block bg-secondary py-5" tabindex="-1" role="dialog" id="modalSignin">
@@ -24,7 +24,7 @@
                         {{ field.errors }}
                     </div>
                     {% endfor %}
-                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Sign Up</button>
+                    <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Login</button>
                     <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
                     <hr class="my-4">
                     <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>

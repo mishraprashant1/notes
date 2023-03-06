@@ -9,6 +9,14 @@ class SignUpFormView(FormView):
     form_class = SignUpForm
     success_url = '/notes/'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = 'Sign Up'
+        context['title'] = 'Sign Up'
+        context['signup_active'] = True
+        return context
+
+
     def form_valid(self, form):
 
         data = form.cleaned_data
