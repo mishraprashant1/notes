@@ -25,6 +25,11 @@
                     </div>
                     {% endfor %}
                     <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Login</button>
+                    {% for message in messages %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
                     <small class="text-muted">By clicking Sign up, you agree to the terms of use.</small>
                     <hr class="my-4">
                     <h2 class="fs-5 fw-bold mb-3">Or use a third-party</h2>

@@ -2,6 +2,8 @@ from .forms import *
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect
+from django.contrib import messages
 
 
 class LoginFormView(FormView):
@@ -27,8 +29,13 @@ class LoginFormView(FormView):
 
         if user is not None:
             login(self.request, user)
-            print('--->Login Successful!')
         else:
-            print('--->Invalid Login')
+            messages.error(self.request, 'Username or Password Not Correct!')
+            return redirect('auth_index')
 
         return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user and self.request.user.is_authenticated:
+            return redirect('notes_index')
+        return super().get(request, *args, **kwargs)
