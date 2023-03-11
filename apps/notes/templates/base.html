@@ -12,6 +12,16 @@
     {% block link_js %}{% endblock %}
 
     <style>
+
+      .open_notes_modal {
+        padding: 10px
+      }
+      .open_notes_modal:hover{
+        background: #d2d2f7;
+        transform: translateY(-2px);
+        transition: all 0.4s;
+      }
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -80,6 +90,7 @@
     }
 
 
+
     </style>
 
 </head>
@@ -139,7 +150,7 @@
     </symbol>
 </svg>
 
-<div class="container">
+<div>
     <header class="p-3 mb-3 border-bottom">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -215,7 +226,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
 
 
 </body>

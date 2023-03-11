@@ -10,7 +10,7 @@ class NotesIndexView(LoginRequiredMixin, ListView):
     login_url = '/auth'
     template_name = 'notes_index/notes_index.html'
     model = Notes
-    paginate_by = 3
+    paginate_by = 30
 
     def get_queryset(self):
         return Notes.objects.filter(user=self.request.user).order_by('-modified_at')
