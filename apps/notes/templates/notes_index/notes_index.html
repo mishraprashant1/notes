@@ -1,6 +1,10 @@
 {% extends "../base.html" %}
 
 {% block page_title %}{{ page_title }}{% endblock %}
+{% load static %}
+{% block link_js %}
+    <script src="{% static 'notes_index.js' %}" ></script>
+{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -16,31 +20,34 @@
 
     <br>
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Your Notes</h6>
+        <h6 class="border-bottom pb-2 mb-0 temp_check">Your Notes</h6>
         {% for note in page_obj %}
-        <!--        <li>{{ note.title }} - {{ note.created_at|date }}</li>-->
-        <div class="d-flex text-muted pt-3">
-            <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
-                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
-                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#007bff"/>
-                <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
-            </svg>
-            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
-                <div class="d-flex justify-content-between">
-                    <strong class="text-gray-dark">{{ note.title }}</strong>
-                    <a href="{% url 'create_note' %}?id={{ note.uuid }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-pencil-square" viewBox="0 0 16 16">
-                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                            <path fill-rule="evenodd"
-                                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                        </svg>
-                    </a>
+<!--        <a href="" data-bs-toggle="modal" data-bs-target="#showNoteModal" data-note-id="{{ note.uuid }}" class="open_notes_modal">-->
+        <div data-note-id="{{ note.uuid }}" class="open_notes_modal">
+            <div class="d-flex text-muted pt-3">
+                <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                     xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32"
+                     preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#007bff"/>
+                    <text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text>
+                </svg>
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-gray-dark">{{ note.title }}</strong>
+                        <a href="{% url 'create_note' %}?id={{ note.uuid }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                <path fill-rule="evenodd"
+                                      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    <span class="d-block">{{ note.created_at|date }}</span>
                 </div>
-                <span class="d-block">{{ note.created_at|date }}</span>
             </div>
         </div>
+<!--        </a>-->
         {% empty %}
         <li>No articles yet.</li>
         {% endfor %}
@@ -64,6 +71,19 @@
             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="showNoteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title note-title" id="exampleModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body note-content">
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

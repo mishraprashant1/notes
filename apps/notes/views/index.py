@@ -1,6 +1,8 @@
-from django.http import HttpResponse
 from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+
 from apps.notes.models import Notes
 
 
@@ -18,3 +20,24 @@ class NotesIndexView(LoginRequiredMixin, ListView):
         context['page_title'] = 'All Notes'
         context['user_id'] = self.request.user
         return context
+
+
+class NotesViewAjax(LoginRequiredMixin, TemplateView):
+
+    def get(self, request, *args, **kwargs):
+        note_uuid = kwargs['note_uuid']
+        try:
+            note = Notes.objects.get(uuid=note_uuid)
+
+            data = dict()
+            data['success'] = False
+            if request.user == note.user:
+                data['title'] = note.title
+                data['content'] = note.content
+                data['created_at'] = note.created_at
+                data['success'] = True
+            return JsonResponse(data)
+        except:
+            data = dict()
+            data['success'] = False
+            return JsonResponse(data)

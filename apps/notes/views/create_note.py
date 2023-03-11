@@ -17,8 +17,10 @@ class CreateNoteForm(LoginRequiredMixin, FormView):
         uuid = self.request.GET.get('id')
         if uuid:
             context['page_title'] = 'Update Note'
+            context['button_text'] = 'Update this Note'
         else:
             context['page_title'] = 'Create Note'
+            context['button_text'] = 'Create New Note'
         context['user_id'] = self.request.user
         return context
 
